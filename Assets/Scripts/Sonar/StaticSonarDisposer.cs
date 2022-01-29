@@ -7,7 +7,6 @@ public class StaticSonarDisposer : MonoBehaviour
 {
     static SimpleSonarShader_Parent sonarParent;
     SonarSettings settings;
-    Vector3 SonarStartPosition;
 
     [Range(0f, 30f)]
     public float SonarInterval = 1f;
@@ -17,7 +16,6 @@ public class StaticSonarDisposer : MonoBehaviour
         if (!sonarParent) sonarParent = FindObjectOfType<SimpleSonarShader_Parent>();
         settings = GetComponent<SonarSettings>();
         settings.PhysicsBased = false;
-        SonarStartPosition = transform.position;
         StartCoroutine(IntervalUpdate());
     }
 
@@ -26,7 +24,7 @@ public class StaticSonarDisposer : MonoBehaviour
         yield return new WaitForFixedUpdate();
         for (; ; )
         {
-            sonarParent.StartSonarRing(SonarStartPosition, settings.impactIntensity, settings.SonarColor);
+            sonarParent.StartSonarRing(transform.position, settings.impactIntensity, settings.SonarColor);
             yield return new WaitForSeconds(SonarInterval);
         }
     }
