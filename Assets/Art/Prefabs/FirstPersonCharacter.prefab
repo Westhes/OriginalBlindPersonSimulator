@@ -321,7 +321,6 @@ GameObject:
   - component: {fileID: 149406935292515550}
   - component: {fileID: 149406935292515549}
   - component: {fileID: 149406935292515548}
-  - component: {fileID: 149406935292515523}
   m_Layer: 0
   m_Name: FirstPersonCharacter
   m_TagString: Untagged
@@ -363,6 +362,7 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 10
   crouchSpeed: 5
+  isRunning: 0
   LookSens: 2
 --- !u!54 &149406935292515549
 Rigidbody:
@@ -390,17 +390,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48083caa2d278e54dabf38f4a23620f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &149406935292515523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149406935292515544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e3fa67c761508946b1cc5d2558036fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
