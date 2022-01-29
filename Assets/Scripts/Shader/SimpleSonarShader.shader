@@ -1,13 +1,12 @@
-﻿// SimpleSonarShader scripts and shaders were written by Drew Okenfuss.
-// For this shader to work, the object must have values passed in to it from the SimpleSonarShader_Parent.cs script.
+﻿// For this shader to work, the object must have values passed in to it from the SimpleSonarShader_Parent.cs script.
 // By default, this happens by having the object be a child of SimpleSonarShader_Parent.
-Shader "MadeByProfessorOakie/SimpleSonarShader" {
+Shader "Custom/SimpleSonarShader" {
 	Properties{
-		_Color("Color", Color) = (1,1,1,1)
+		[hdr]_Color("Color", Color) = (1,1,1,1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Metallic("Metallic", Range(0,1)) = 0.0
-		_RingColor("Ring Color", Color) = (1,1,1,1)
+		[hdr]_RingColor("Ring Color", Color) = (1,1,1,1)
 		_RingColorIntensity("Ring Color Intensity", float) = 2
 		_RingSpeed("Ring Speed", float) = 1
 		_RingWidth("Ring Width", float) = 0.1
@@ -20,7 +19,7 @@ Shader "MadeByProfessorOakie/SimpleSonarShader" {
 
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
-#pragma surface surf Standard fullforwardshadows
+#pragma surface surf Standard /*fullforwardshadows*/ /*Lambert*/
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 #pragma target 3.0
@@ -39,6 +38,7 @@ Shader "MadeByProfessorOakie/SimpleSonarShader" {
 	half4 _hitPts[20];
 	half _StartTime;
 	half _Intensity[20];
+	fixed4 _SonarColor[20];
 
 	half _Glossiness;
 	half _Metallic;
@@ -54,7 +54,7 @@ Shader "MadeByProfessorOakie/SimpleSonarShader" {
 		fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 		o.Albedo = c.rgb;
 
-		half DiffFromRingCol = abs(o.Albedo.r - _RingColor.r) + abs(o.Albedo.b - _RingColor.b) + abs(o.Albedo.g - _RingColor.g);
+		//half DiffFromRingCol = abs(o.Albedo.r - _RingColor.r) + abs(o.Albedo.b - _RingColor.b) + abs(o.Albedo.g - _RingColor.g);
 
 		// Check every point in the array
 		// The goal is to set RGB to highest possible values based on current sonar rings
@@ -70,18 +70,18 @@ Shader "MadeByProfessorOakie/SimpleSonarShader" {
 				// Calculate predicted RGB values sampling the texture radially
 				float angle = acos(dot(normalize(IN.worldPos - _hitPts[i]), float3(1,0,0)));
 				val *= tex2D(_RingTex, half2(1 - posInRing, angle));
-				half3 tmp = _RingColor * val + c * (1 - val);
+				half3 tmp = _SonarColor[i] * val + c * (1 - val);
 
 				// Determine if predicted values will be closer to the Ring color
-				half tempDiffFromRingCol = abs(tmp.r - _RingColor.r) + abs(tmp.b - _RingColor.b) + abs(tmp.g - _RingColor.g);
-				if (tempDiffFromRingCol < DiffFromRingCol)
+				//half tempDiffFromRingCol = abs(tmp.r - _SonarColor[i].r) + abs(tmp.b - _SonarColor[i].b) + abs(tmp.g - _SonarColor[i].g);
+				//if (tempDiffFromRingCol < DiffFromRingCol)
 				{
 					// Update values using our predicted ones.
-					DiffFromRingCol = tempDiffFromRingCol;
-					o.Albedo.r = tmp.r;
-					o.Albedo.g = tmp.g;
-					o.Albedo.b = tmp.b;
-					o.Albedo.rgb *= _RingColorIntensity;
+					//DiffFromRingCol = tempDiffFromRingCol;
+					o.Emission.r += tmp.r;
+					o.Emission.g += tmp.g;
+					o.Emission.b += tmp.b;
+					o.Emission.rgb *= _RingColorIntensity;
 				}
 			}
 		}

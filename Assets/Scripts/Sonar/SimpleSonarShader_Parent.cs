@@ -27,6 +27,9 @@ public class SimpleSonarShader_Parent : MonoBehaviour
     private Queue<float> intensityQueue = new Queue<float>(QueueSize);
 
 
+    private Queue<Color> colorsQueue = new Queue<Color>(QueueSize);
+
+
     private void Start()
     {
         // Get renderers that will have effect applied to them
@@ -37,13 +40,14 @@ public class SimpleSonarShader_Parent : MonoBehaviour
         {
             positionsQueue.Enqueue(GarbagePosition);
             intensityQueue.Enqueue(-5000f);
+            colorsQueue.Enqueue(Color.clear);
         }
     }
 
     /// <summary>
     /// Starts a sonar ring from this position with the given intensity.
     /// </summary>
-    public void StartSonarRing(Vector4 position, float intensity)
+    public void StartSonarRing(Vector4 position, float intensity, Color sonarColor)
     {
         // Put values into the queue
         position.w = Time.timeSinceLevelLoad;
@@ -53,6 +57,9 @@ public class SimpleSonarShader_Parent : MonoBehaviour
         intensityQueue.Dequeue();
         intensityQueue.Enqueue(intensity);
 
+        colorsQueue.Dequeue();
+        colorsQueue.Enqueue(sonarColor);
+
         // Send updated queues to the shaders
         foreach (Renderer r in ObjectRenderers)
         {
@@ -60,6 +67,7 @@ public class SimpleSonarShader_Parent : MonoBehaviour
             {
                 r.material.SetVectorArray("_hitPts", positionsQueue.ToArray());
                 r.material.SetFloatArray("_Intensity", intensityQueue.ToArray());
+                r.material.SetColorArray("_SonarColor", colorsQueue.ToArray());
             }
         }
     }

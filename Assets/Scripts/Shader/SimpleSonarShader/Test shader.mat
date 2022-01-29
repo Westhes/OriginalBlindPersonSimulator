@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Test shader
-  m_Shader: {fileID: -6465566751694194690, guid: db68e4e552ccdde43962ac4cce04a810, type: 3}
+  m_Shader: {fileID: 4800000, guid: 1f5440df4ae7fe146a562e196f89d6ad, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -118,7 +118,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.38431376, g: 0.31764707, b: 0.27058825, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RingColor: {r: 0.8113208, g: 0.18752226, b: 0.18752226, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
