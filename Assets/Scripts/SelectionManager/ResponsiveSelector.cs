@@ -25,7 +25,6 @@ public class ResponsiveSelector : MonoBehaviour, ISelector
 
 
             float distanceBetween = Vector3.Distance(selectableCenter, ray.origin);
-            print(distanceBetween);
 
             //Display corresponding lookpercentage on the Canvas Text Objects
             selectables[i].LookPercentage = lookPercentage;

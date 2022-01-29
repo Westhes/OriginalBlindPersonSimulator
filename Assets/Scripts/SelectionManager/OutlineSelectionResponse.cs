@@ -4,7 +4,7 @@ public class OutlineSelectionResponse : MonoBehaviour, ISelectionResponse
 {
     public void OnSelect(Transform selection)
     {
-        print("Selectable");
+        //print("Selectable");
         var outline = selection.GetComponent<Outline>();
         if (outline != null)
         {
@@ -14,7 +14,7 @@ public class OutlineSelectionResponse : MonoBehaviour, ISelectionResponse
 
     public void OnDeselect(Transform selection)
     {
-        print("Not Selectable");
+        //print("Not Selectable");
         var outline = selection.GetComponent<Outline>();
         if (outline != null)
         {
