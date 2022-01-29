@@ -15,9 +15,14 @@ public class PlayerMovement : MonoBehaviour
     float jumpSpeed = 1f;
     bool isCrouched;
     bool isHolding;
+    int scalingFramesLeft = 0;
 
     Rigidbody rb;
     Vector3 direction;
+    Vector3 crouchScale = new Vector3(1, 0.5f, 1);
+    Vector3 normalScale = new Vector3(1, 1, 1);
+    Vector3 currentSize;
+    Vector3 targetSize;
 
     [Header("Rotation")]
     public float LookSens = 2f;
@@ -63,19 +68,26 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(new Vector3(0, jumpSpeed, 0), ForceMode.Impulse);
         }
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            //transform.position -= transform.up * crouchSpeed * Time.deltaTime;
-            if (isCrouched)
-            {
-                isCrouched = false;
-                //Stay up
-            }
-            else
-            {
-                isCrouched = true;
-                //Crouch
-            }
+            isCrouched = true;
+            //transform.localScale = new Vector3(1, 0.5f, 1);
+            scalingFramesLeft = 25;
+            currentSize = crouchScale;
+            targetSize = normalScale;
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            isCrouched = false;
+            //transform.localScale = normalScale;
+            scalingFramesLeft = 25;
+            currentSize = normalScale;
+            targetSize = crouchScale;
+        }
+        if (scalingFramesLeft > 0)
+        {
+            transform.localScale = Vector3.Lerp(currentSize, targetSize, Time.deltaTime * 25);
+            scalingFramesLeft--;
         }
         #endregion
 
