@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,9 +13,10 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
     public float crouchSpeed = 5f;
-    float jumpSpeed = 1f;
+    float jumpSpeed = 0.5f;
     bool isCrouched;
     bool isHolding;
+    public bool isRunning;
     int scalingFramesLeft = 0;
 
     Rigidbody rb;
@@ -29,11 +31,18 @@ public class PlayerMovement : MonoBehaviour
     float XRotation;
     float YRotation;
     float RotationClamp = 90f;
-    
+
+    public static PlayerMovement movementInstance;
+
+    private void Awake()
+    {
+        movementInstance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -58,10 +67,14 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            isRunning = true;
+            
             walkSpeed += runSpeed;
         }
+        
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
+            isRunning = false;
             walkSpeed -= runSpeed;
         }
         if (Input.GetKey(KeyCode.Space) && GroundChecker.IsGrounded)
@@ -92,6 +105,14 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         Rotate();
+    }
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isRunning = true;
+            PlayerStamina.instance.UseStamina(1);
+        }
     }
     void Rotate()
     {
