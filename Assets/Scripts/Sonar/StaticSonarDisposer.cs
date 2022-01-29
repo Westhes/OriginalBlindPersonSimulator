@@ -8,6 +8,9 @@ public class StaticSonarDisposer : MonoBehaviour
     static SimpleSonarShader_Parent sonarParent;
     SonarSettings settings;
 
+
+    [Range(0f, 5f)]
+    public float SonarInitialDelay = 0f;
     [Range(0f, 30f)]
     public float SonarInterval = 1f;
 
@@ -21,7 +24,7 @@ public class StaticSonarDisposer : MonoBehaviour
 
     IEnumerator IntervalUpdate()
     {
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(SonarInitialDelay);
         for (; ; )
         {
             sonarParent.StartSonarRing(transform.position, settings.impactIntensity, settings.SonarColor);
