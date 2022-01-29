@@ -10,6 +10,6 @@ public class Selectable : MonoBehaviour
     private void Update()
     {
         //Set TMP text look percentage calculated in ResponsiveSelector
-        lookPercentageLabel.text = LookPercentage.ToString("F3");
+        //lookPercentageLabel.text = LookPercentage.ToString("F3");
     }
 }
