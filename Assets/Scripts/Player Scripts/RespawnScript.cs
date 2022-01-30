@@ -17,7 +17,12 @@ public class RespawnScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            SceneManager.LoadScene("Main Scene");
+            //Application.LoadLevel(Application.loadedLevel);
+
+            //string currentScene = SceneManager.GetActiveScene().name;
+            //Debug.Log(currentScene);
+
+            //SceneManager.LoadScene(currentScene);
         }
     }
     //private void OnCollisionEnter(Collision collision)
