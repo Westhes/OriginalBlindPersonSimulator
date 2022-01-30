@@ -6,11 +6,11 @@ Shader "Custom/SimpleSonarShader" {
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Metallic("Metallic", Range(0,1)) = 0.0
-		[hdr]_RingColor("Ring Color", Color) = (1,1,1,1)
-		_RingColorIntensity("Ring Color Intensity", float) = 2
-		_RingSpeed("Ring Speed", float) = 1
-		_RingWidth("Ring Width", float) = 0.1
-		_RingIntensityScale("Ring Range", float) = 1
+		//[hdr]_RingColor("Ring Color", Color) = (1,1,1,1)
+		//_RingColorIntensity("Ring Color Intensity", float) = 2
+		//_RingSpeed("Ring Speed", float) = 1
+		//_RingWidth("Ring Width", float) = 0.1
+		//_RingIntensityScale("Ring Range", float) = 1
 		_RingTex("Ring Texture", 2D) = "white" {}
 	}
 		SubShader{
@@ -39,15 +39,14 @@ Shader "Custom/SimpleSonarShader" {
 	half _StartTime;
 	half _Intensity[20];
 	fixed4 _SonarColor[20];
+	half _SonarColorIntensity[20];
+	half _RingSpeed[20];
+	half _RingWidth[20];
+	half _RingIntensityScale[20];
 
 	half _Glossiness;
 	half _Metallic;
 	fixed4 _Color;
-	fixed4 _RingColor;
-	half _RingColorIntensity;
-	half _RingSpeed;
-	half _RingWidth;
-	half _RingIntensityScale;
 
 
 	void surf(Input IN, inout SurfaceOutputStandard o) {
@@ -61,11 +60,11 @@ Shader "Custom/SimpleSonarShader" {
 		for (int i = 0; i < 20; i++) {
 
 			half d = distance(_hitPts[i], IN.worldPos);
-			half intensity = _Intensity[i] * _RingIntensityScale;
+			half intensity = _Intensity[i] * _RingIntensityScale[i];
 			half val = (1 - (d / intensity));
 
-			if (d < (_Time.y - _hitPts[i].w) * _RingSpeed && d >(_Time.y - _hitPts[i].w) * _RingSpeed - _RingWidth && val > 0) {
-				half posInRing = (d - ((_Time.y - _hitPts[i].w) * _RingSpeed - _RingWidth)) / _RingWidth;
+			if (d < (_Time.y - _hitPts[i].w) * _RingSpeed[i] && d >(_Time.y - _hitPts[i].w) * _RingSpeed[i] - _RingWidth[i] && val > 0) {
+				half posInRing = (d - ((_Time.y - _hitPts[i].w) * _RingSpeed[i] - _RingWidth[i])) / _RingWidth[i];
 
 				// Calculate predicted RGB values sampling the texture radially
 				float angle = acos(dot(normalize(IN.worldPos - _hitPts[i]), float3(1,0,0)));
@@ -81,7 +80,7 @@ Shader "Custom/SimpleSonarShader" {
 					o.Emission.r += tmp.r;
 					o.Emission.g += tmp.g;
 					o.Emission.b += tmp.b;
-					o.Emission.rgb *= _RingColorIntensity;
+					o.Emission.rgb *= _SonarColorIntensity[i];
 				}
 			}
 		}

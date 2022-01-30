@@ -27,7 +27,7 @@ public class StaticSonarDisposer : MonoBehaviour
         yield return new WaitForSeconds(SonarInitialDelay);
         for (; ; )
         {
-            sonarParent.StartSonarRing(transform.position, settings.impactIntensity, settings.SonarColor);
+            sonarParent.StartSonarRing(transform.position, settings.impactIntensity, settings);
             yield return new WaitForSeconds(SonarInterval);
         }
     }

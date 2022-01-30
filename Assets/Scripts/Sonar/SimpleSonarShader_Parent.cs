@@ -29,6 +29,14 @@ public class SimpleSonarShader_Parent : MonoBehaviour
 
     private Queue<Color> colorsQueue = new Queue<Color>(QueueSize);
 
+    private Queue<float> colorIntensityQueue = new Queue<float>(QueueSize);
+
+    private Queue<float> ringspeedQueue = new Queue<float>(QueueSize);
+
+    private Queue<float> ringWidthQueue = new Queue<float>(QueueSize);
+
+    private Queue<float> ringIntensityScaleQueue = new Queue<float>(QueueSize);
+
 
     private void Start()
     {
@@ -41,13 +49,17 @@ public class SimpleSonarShader_Parent : MonoBehaviour
             positionsQueue.Enqueue(GarbagePosition);
             intensityQueue.Enqueue(-5000f);
             colorsQueue.Enqueue(Color.clear);
+            colorIntensityQueue.Enqueue(0f);
+            ringspeedQueue.Enqueue(0f);
+            ringWidthQueue.Enqueue(0f);
+            ringIntensityScaleQueue.Enqueue(0f);
         }
     }
 
     /// <summary>
     /// Starts a sonar ring from this position with the given intensity.
     /// </summary>
-    public void StartSonarRing(Vector4 position, float intensity, Color sonarColor)
+    public void StartSonarRing(Vector4 position, float intensity, Color sonarColor, float colorIntensity, float ringSpeed, float ringWidth, float ringIntensityScale)
     {
         // Put values into the queue
         position.w = Time.timeSinceLevelLoad;
@@ -60,6 +72,18 @@ public class SimpleSonarShader_Parent : MonoBehaviour
         colorsQueue.Dequeue();
         colorsQueue.Enqueue(sonarColor);
 
+        colorIntensityQueue.Dequeue();
+        colorIntensityQueue.Enqueue(colorIntensity);
+
+        ringspeedQueue.Dequeue();
+        ringspeedQueue.Enqueue(ringSpeed);
+
+        ringWidthQueue.Dequeue();
+        ringWidthQueue.Enqueue(ringWidth);
+
+        ringIntensityScaleQueue.Dequeue();
+        ringIntensityScaleQueue.Enqueue(ringIntensityScale);
+
         // Send updated queues to the shaders
         foreach (Renderer r in ObjectRenderers)
         {
@@ -68,8 +92,17 @@ public class SimpleSonarShader_Parent : MonoBehaviour
                 r.material.SetVectorArray("_hitPts", positionsQueue.ToArray());
                 r.material.SetFloatArray("_Intensity", intensityQueue.ToArray());
                 r.material.SetColorArray("_SonarColor", colorsQueue.ToArray());
+                r.material.SetFloatArray("_SonarColorIntensity", colorIntensityQueue.ToArray());
+                r.material.SetFloatArray("_RingSpeed", ringspeedQueue.ToArray());
+                r.material.SetFloatArray("_RingWidth", ringWidthQueue.ToArray());
+                r.material.SetFloatArray("_RingIntensityScale", ringIntensityScaleQueue.ToArray());
             }
         }
+    }
+
+    public void StartSonarRing(Vector4 position, float intensity, SonarSettings settings)
+    {
+        StartSonarRing(position, intensity, settings.SonarColor, settings.colorIntensity, settings.ringspeed, settings.ringWidth, settings.ringIntensityScale);
     }
 
 }
