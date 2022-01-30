@@ -38,8 +38,11 @@ public class RespawnScript : MonoBehaviour
         }
     }
 
-    IEnumerator Delay()
+    public IEnumerator Delay()
     {
+        canMove = false;
+        Cursor.lockState = CursorLockMode.None;
+
         yield return new WaitForSeconds(1f);
 
         StaminaBarCanvas.SetActive(false);

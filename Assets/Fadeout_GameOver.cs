@@ -6,11 +6,13 @@ using UnityEngine.UI;
 
 public class Fadeout_GameOver : StateMachineBehaviour
 {
+    private RespawnScript respawnScript;
     public RawImage fadeoutImage;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         fadeoutImage = FindObjectOfType<RawImage>();
+        respawnScript = FindObjectOfType<RespawnScript>();
         fadeoutImage.StartCoroutine(Fadeout());
     }
 
@@ -22,6 +24,7 @@ public class Fadeout_GameOver : StateMachineBehaviour
             yield return new WaitForFixedUpdate();
         }
         Debug.Log("Game over!");
+        respawnScript.StartCoroutine(respawnScript.Delay());
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
