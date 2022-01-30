@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-enum EnemyState
+public enum EnemyState
 {
     Uninitialized = 0,
     Idle = 1,
@@ -18,10 +18,10 @@ public class EnemyBehaviour : MonoBehaviour
     delegate void CallState();
     CallState callState;
     EnemyState _state;
-    EnemyState State
+    public EnemyState State
     {
         get => _state;
-        set
+        private set
         {
             _state = value;
             animator.SetFloat("AnimationSpeed", walkAnimationSpeedMultiplier);
@@ -29,8 +29,11 @@ public class EnemyBehaviour : MonoBehaviour
             switch(value)
             {
                 case EnemyState.Uninitialized:
+                    callState = null;
                     break;
                 case EnemyState.Idle:
+                    if (!playerMovement.IsSafeSoundPlaying)
+                        playerMovement.PlaySafeBGM(true);
                     randomIdleTime = Time.time + Random.Range(2f, 4f);
                     animator.SetFloat("AnimationSpeed", 0f);
                     agent.speed = 0f;
@@ -47,6 +50,8 @@ public class EnemyBehaviour : MonoBehaviour
                     break;
                 case EnemyState.Chasing:
                     animator.SetFloat("AnimationSpeed", runAnimationSpeedMultiplier);
+                    if (playerMovement.IsSafeSoundPlaying)
+                        playerMovement.PlaySafeBGM(false);
                     agent.speed = runSpeed;
                     callState = Chase;
                     break;
@@ -103,7 +108,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Update()
     {
-        callState();
+        //callState();
+        callState?.Invoke();
     }
 
     void Idle()
@@ -141,6 +147,7 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.Log("Caught player! Execute killing player logic");
             audio.PlayOneShot(GameoverSound, 0.3f);
             GameoverObject.SetActive(true);
+            State = EnemyState.Uninitialized;
         }
     }
 
