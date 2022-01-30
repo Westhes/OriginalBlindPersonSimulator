@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip walkingSound;
     public AudioClip crouchingSound;
     private AudioSource audio;
+    private DoubleAudioSource doubleAudio;
+    public AudioClip safetyBGM;
+    public AudioClip chaseBGM;
 
     private void Awake()
     {
@@ -46,7 +49,9 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
+        doubleAudio = GetComponent<DoubleAudioSource>();
         Cursor.lockState = CursorLockMode.Locked;
+        PlaySafeBGM(true);
     }
 
     float distanceMovedSinceLastTime = 0f;
@@ -59,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 move = Vector3.zero;
             if (Input.GetKey(KeyCode.W))
             {
-                move += transform.forward * walkSpeed * Time.deltaTime; 
+                move += transform.forward * walkSpeed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.A))
             {
@@ -124,8 +129,18 @@ public class PlayerMovement : MonoBehaviour
             Rotate();
         }
         #endregion
-
     }
+
+    public bool IsSafeSoundPlaying { get; private set; } = true;
+    public void PlaySafeBGM(bool safe)
+    {
+        IsSafeSoundPlaying = safe;
+        if (safe)
+            doubleAudio.CrossFade(safetyBGM, 0.1f, 1f, 1f);
+        else
+            doubleAudio.CrossFade(chaseBGM, 0.5f, 0.2f, 0f);
+    }
+
     private void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.LeftShift))
