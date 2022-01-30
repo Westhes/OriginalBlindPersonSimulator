@@ -29,6 +29,7 @@ public class EnemyBehaviour : MonoBehaviour
             switch(value)
             {
                 case EnemyState.Uninitialized:
+                    animator.SetFloat("AnimationSpeed", 0f);
                     callState = null;
                     break;
                 case EnemyState.Idle:
