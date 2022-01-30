@@ -40,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip safetyBGM;
     public AudioClip chaseBGM;
 
+    private float startTime;
+
     private void Awake()
     {
         movementInstance = this;
@@ -149,6 +151,8 @@ public class PlayerMovement : MonoBehaviour
             isRunning = true;
             PlayerStamina.instance.UseStamina(1);
         }
+
+
     }
     void Rotate()
     {

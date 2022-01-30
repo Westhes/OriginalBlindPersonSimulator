@@ -8,7 +8,7 @@ public class PlayerStamina : MonoBehaviour
     [SerializeField]
     private Slider staminaBar;
 
-    int totalStamina = 250;
+    int totalStamina = 100;
     int currentStamina;
 
     private WaitForSeconds regenTick = new WaitForSeconds(0.03f);
