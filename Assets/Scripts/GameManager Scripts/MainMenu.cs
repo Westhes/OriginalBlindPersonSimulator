@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main Scene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("DefaultScene");
     }
     public void ExitGame()
     {
