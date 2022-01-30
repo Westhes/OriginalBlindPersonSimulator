@@ -2822,7 +2822,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.1
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4812,6 +4812,10 @@ PrefabInstance:
       propertyPath: audio
       value: 
       objectReference: {fileID: 1266367991}
+    - target: {fileID: 5866666020960217335, guid: be01bd84c4fae0b4ba63ccdea25b22c0, type: 3}
+      propertyPath: GameoverSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 01b881ac981556043a36cfdd1c69beea, type: 3}
     - target: {fileID: 5866666020960217335, guid: be01bd84c4fae0b4ba63ccdea25b22c0, type: 3}
       propertyPath: GameoverObject
       value: 

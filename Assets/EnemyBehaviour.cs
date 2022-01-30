@@ -88,10 +88,14 @@ public class EnemyBehaviour : MonoBehaviour
 
     public GameObject GameoverObject;
 
+    public AudioClip GameoverSound;
+    private AudioSource audio;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
 
         playerMovement = FindObjectOfType<PlayerMovement>();
         State = EnemyState.Idle;
@@ -135,6 +139,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (Vector3.Distance(transform.position, playerMovement.transform.position) < CapturePlayerRange)
         {
             Debug.Log("Caught player! Execute killing player logic");
+            audio.PlayOneShot(GameoverSound, 0.3f);
             GameoverObject.SetActive(true);
         }
     }
