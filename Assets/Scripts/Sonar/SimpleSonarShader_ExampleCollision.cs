@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SimpleSonarShader_ExampleCollision : MonoBehaviour
 {
-    static SimpleSonarShader_Parent parent;
+    public static SimpleSonarShader_Parent parent;
     private void Awake()
     {
         if (parent == null)
@@ -19,9 +19,9 @@ public class SimpleSonarShader_ExampleCollision : MonoBehaviour
         if (collision.transform.TryGetComponent(out SonarSettings settings))
         {
             if (settings.PhysicsBased)
-                parent.StartSonarRing(collision.contacts[0].point, collision.impulse.magnitude / 10.0f * settings.impactMultiplier, settings.SonarColor);
+                parent.StartSonarRing(collision.contacts[0].point, collision.impulse.magnitude / 10.0f * settings.impactMultiplier, settings);
             else
-                parent.StartSonarRing(collision.contacts[0].point, settings.impactIntensity, settings.SonarColor);
+                parent.StartSonarRing(collision.contacts[0].point, settings.impactIntensity, settings);
         }
     }
 

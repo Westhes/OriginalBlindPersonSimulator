@@ -271,10 +271,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d7d7e963088d2459f19638d611c9fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SonarColor: {r: 0.9137255, g: 0.19980633, b: 0.07450979, a: 1}
+  SonarColor: {r: 0.8773585, g: 0.04221741, b: 0.037246335, a: 1}
   PhysicsBased: 0
   impactIntensity: 1
   impactMultiplier: 1
+  colorIntensity: 1.6
+  ringspeed: 3
+  ringWidth: 0.66
+  ringIntensityScale: 3
 --- !u!1 &718752071833788277
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +612,7 @@ MonoBehaviour:
   - {fileID: 0}
   RandomExplorationPoint: 0
   CapturePlayerRange: 1.5
+  maxSightDistance: 10
 --- !u!1 &2914532393563871452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,10 +1475,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d7d7e963088d2459f19638d611c9fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SonarColor: {r: 0.07450979, g: 0.48383048, b: 0.9137255, a: 1}
+  SonarColor: {r: 0.8773585, g: 0.04221741, b: 0.037246335, a: 1}
   PhysicsBased: 0
   impactIntensity: 1
   impactMultiplier: 1
+  colorIntensity: 1.6
+  ringspeed: 3
+  ringWidth: 0.66
+  ringIntensityScale: 3
 --- !u!1 &7600987637025508063
 GameObject:
   m_ObjectHideFlags: 0

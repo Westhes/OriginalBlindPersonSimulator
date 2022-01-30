@@ -17,8 +17,8 @@ public class WalkTrigger : MonoBehaviour
     {
         //Debug.Log("Got triggered " + value);
         if (value == 1)
-            sonarParent.StartSonarRing(left.transform.position, left.impactIntensity, left.SonarColor);
+            sonarParent.StartSonarRing(left.transform.position, left.impactIntensity, left);
         else if (value == 2)
-            sonarParent.StartSonarRing(right.transform.position, right.impactIntensity, right.SonarColor);
+            sonarParent.StartSonarRing(right.transform.position, right.impactIntensity, right);
     }
 }
