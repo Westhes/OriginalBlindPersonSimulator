@@ -6,32 +6,44 @@ using UnityEngine.SceneManagement;
 public class RespawnScript : MonoBehaviour
 {
     public GameObject spawnPoint;
+    public GameObject TryAgainPanel;
+    public GameObject StaminaBarCanvas;
+
+    public static bool canMove;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        canMove = true;
+
+        StaminaBarCanvas.SetActive(true);
+        TryAgainPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Q))
+        //if (Input.GetKey(KeyCode.Q))
+        //{
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //    Debug.Log("Scene Restarted");
+        //}
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 9)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            Debug.Log("Scene Restarted");
-            //Application.LoadLevel(Application.loadedLevel);
-
-            //string currentScene = SceneManager.GetActiveScene().name;
-            //Debug.Log(currentScene);
-
-            //SceneManager.LoadScene(currentScene);
+            StaminaBarCanvas.SetActive(false);
+            TryAgainPanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            canMove = false;
         }
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.layer == 9)
-    //    {
-    //        SceneManager.LoadScene("Main Scene");
-    //    }
-    //}
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("Scene Restarted");
+        TryAgainPanel.SetActive(false);
+        
+    }
 }

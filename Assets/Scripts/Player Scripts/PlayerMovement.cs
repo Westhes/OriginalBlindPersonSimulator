@@ -49,62 +49,65 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         #region BasicMovement
-        if (Input.GetKey(KeyCode.W))
+        if (RespawnScript.canMove)
         {
-            transform.position += transform.forward * walkSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position -= transform.right * walkSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position -= transform.forward * walkSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position += transform.right * walkSpeed * Time.deltaTime;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            isRunning = true;
-            
-            walkSpeed += runSpeed;
-        }
-        
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            isRunning = false;
-            walkSpeed -= runSpeed;
-        }
-        if (Input.GetKey(KeyCode.Space) && GroundChecker.IsGrounded)
-        {
-            rb.AddForce(new Vector3(0, jumpSpeed, 0), ForceMode.Impulse);
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            isCrouched = true;
-            //transform.localScale = new Vector3(1, 0.5f, 1);
-            scalingFramesLeft = 25;
-            currentSize = crouchScale;
-            targetSize = normalScale;
-        }
-        if (Input.GetKeyUp(KeyCode.C))
-        {
-            isCrouched = false;
-            //transform.localScale = normalScale;
-            scalingFramesLeft = 25;
-            currentSize = normalScale;
-            targetSize = crouchScale;
-        }
-        if (scalingFramesLeft > 0)
-        {
-            transform.localScale = Vector3.Lerp(currentSize, targetSize, Time.deltaTime * 25);
-            scalingFramesLeft--;
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.position += transform.forward * walkSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.position -= transform.right * walkSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                transform.position -= transform.forward * walkSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.position += transform.right * walkSpeed * Time.deltaTime;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                isRunning = true;
+
+                walkSpeed += runSpeed;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                isRunning = false;
+                walkSpeed -= runSpeed;
+            }
+            if (Input.GetKey(KeyCode.Space) && GroundChecker.IsGrounded)
+            {
+                rb.AddForce(new Vector3(0, jumpSpeed, 0), ForceMode.Impulse);
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                isCrouched = true;
+                //transform.localScale = new Vector3(1, 0.5f, 1);
+                scalingFramesLeft = 25;
+                currentSize = crouchScale;
+                targetSize = normalScale;
+            }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                isCrouched = false;
+                //transform.localScale = normalScale;
+                scalingFramesLeft = 25;
+                currentSize = normalScale;
+                targetSize = crouchScale;
+            }
+            if (scalingFramesLeft > 0)
+            {
+                transform.localScale = Vector3.Lerp(currentSize, targetSize, Time.deltaTime * 25);
+                scalingFramesLeft--;
+            }
+            Rotate();
         }
         #endregion
 
-        Rotate();
     }
     private void FixedUpdate()
     {
