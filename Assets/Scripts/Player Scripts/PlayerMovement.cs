@@ -33,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
     float RotationClamp = 90f;
 
     public static PlayerMovement movementInstance;
+    public AudioClip walkingSound;
+    public AudioClip crouchingSound;
+    private AudioSource audio;
+    private DoubleAudioSource doubleAudio;
+    public AudioClip safetyBGM;
+    public AudioClip chaseBGM;
 
     private void Awake()
     {
@@ -42,36 +48,52 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audio = GetComponent<AudioSource>();
+        doubleAudio = GetComponent<DoubleAudioSource>();
         Cursor.lockState = CursorLockMode.Locked;
+        PlaySafeBGM(true);
     }
 
+    float distanceMovedSinceLastTime = 0f;
     // Update is called once per frame
     void Update()
     {
         #region BasicMovement
         if (RespawnScript.canMove)
         {
+            Vector3 move = Vector3.zero;
             if (Input.GetKey(KeyCode.W))
             {
-                transform.position += transform.forward * walkSpeed * Time.deltaTime;
+                move += transform.forward * walkSpeed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.A))
             {
-                transform.position -= transform.right * walkSpeed * Time.deltaTime;
+                move -= transform.right * walkSpeed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                transform.position -= transform.forward * walkSpeed * Time.deltaTime;
+                move -= transform.forward * walkSpeed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                transform.position += transform.right * walkSpeed * Time.deltaTime;
+                move += transform.right * walkSpeed * Time.deltaTime;
             }
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 isRunning = true;
 
                 walkSpeed += runSpeed;
+            }
+
+            transform.position += move;
+            distanceMovedSinceLastTime += move.magnitude;
+            if (distanceMovedSinceLastTime > 2f)
+            {
+                distanceMovedSinceLastTime = 0f;
+                if (!isCrouched)
+                    audio.PlayOneShot(walkingSound, Random.Range(0.3f, .5f));
+                else
+                    audio.PlayOneShot(crouchingSound, Random.Range(0.2f, .3f));
             }
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -107,8 +129,18 @@ public class PlayerMovement : MonoBehaviour
             Rotate();
         }
         #endregion
-
     }
+
+    public bool IsSafeSoundPlaying { get; private set; } = true;
+    public void PlaySafeBGM(bool safe)
+    {
+        IsSafeSoundPlaying = safe;
+        if (safe)
+            doubleAudio.CrossFade(safetyBGM, 0.1f, 1f, 1f);
+        else
+            doubleAudio.CrossFade(chaseBGM, 0.5f, 0.2f, 0f);
+    }
+
     private void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.LeftShift))

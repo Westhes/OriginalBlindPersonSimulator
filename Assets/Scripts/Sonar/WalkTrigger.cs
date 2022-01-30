@@ -7,7 +7,7 @@ public class WalkTrigger : MonoBehaviour
     static SimpleSonarShader_Parent sonarParent;
     public SonarSettings left;
     public SonarSettings right;
-
+    public AudioSource audio;
     public void Start()
     {
         sonarParent = FindObjectOfType<SimpleSonarShader_Parent>();
@@ -20,5 +20,6 @@ public class WalkTrigger : MonoBehaviour
             sonarParent.StartSonarRing(left.transform.position, left.impactIntensity, left);
         else if (value == 2)
             sonarParent.StartSonarRing(right.transform.position, right.impactIntensity, right);
+        audio?.PlayOneShot(audio.clip, Random.Range(0.9f, 1f));
     }
 }
