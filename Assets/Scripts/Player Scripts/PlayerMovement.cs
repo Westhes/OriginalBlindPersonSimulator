@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         doubleAudio = GetComponent<DoubleAudioSource>();
         Cursor.lockState = CursorLockMode.Locked;
         PlaySafeBGM(true);
+        targetSize = normalScale;
     }
 
     float distanceMovedSinceLastTime = 0f;
@@ -109,22 +110,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 isCrouched = true;
                 //transform.localScale = new Vector3(1, 0.5f, 1);
-                scalingFramesLeft = 25;
-                currentSize = crouchScale;
-                targetSize = normalScale;
+                //scalingFramesLeft = 25;
+                //currentSize = crouchScale;
+                targetSize = crouchScale;
             }
             if (Input.GetKeyUp(KeyCode.C))
             {
                 isCrouched = false;
                 //transform.localScale = normalScale;
-                scalingFramesLeft = 25;
-                currentSize = normalScale;
-                targetSize = crouchScale;
+                //scalingFramesLeft = 25;
+                //currentSize = normalScale;
+                targetSize = normalScale;
             }
-            if (scalingFramesLeft > 0)
+            if (transform.localScale != targetSize)
             {
-                transform.localScale = Vector3.Lerp(currentSize, targetSize, Time.deltaTime * 25);
-                scalingFramesLeft--;
+                transform.localScale = Vector3.MoveTowards(transform.localScale, targetSize, Time.deltaTime * 5f);
+                //scalingFramesLeft--;
             }
             Rotate();
         }
