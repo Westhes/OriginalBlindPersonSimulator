@@ -86,6 +86,7 @@ public class EnemyBehaviour : MonoBehaviour
     [Range(3f, 20f)]
     public float maxSightDistance = 10f;
 
+    public GameObject GameoverObject;
 
     private void Start()
     {
@@ -134,6 +135,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (Vector3.Distance(transform.position, playerMovement.transform.position) < CapturePlayerRange)
         {
             Debug.Log("Caught player! Execute killing player logic");
+            GameoverObject.SetActive(true);
         }
     }
 

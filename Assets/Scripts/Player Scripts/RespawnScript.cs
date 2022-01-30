@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class RespawnScript : MonoBehaviour
 {
-    public GameObject spawnPoint;
     public GameObject TryAgainPanel;
     public GameObject StaminaBarCanvas;
 
@@ -33,12 +32,20 @@ public class RespawnScript : MonoBehaviour
     {
         if (collision.gameObject.layer == 9)
         {
-            StaminaBarCanvas.SetActive(false);
-            TryAgainPanel.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
+            StartCoroutine(Delay());
             canMove = false;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1f);
+
+        StaminaBarCanvas.SetActive(false);
+        TryAgainPanel.SetActive(true);
+    }
+
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
