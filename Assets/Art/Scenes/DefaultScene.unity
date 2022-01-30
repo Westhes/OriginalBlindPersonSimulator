@@ -1154,17 +1154,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 1, z: 0.33}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &783169602 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1857626896025448976, guid: 5db13e178bc4f624984055bd2d81996c, type: 3}
-  m_PrefabInstance: {fileID: 2459768084874207420}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64ba745ae9c94e89871dc019f144aa9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &808568619
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1829,7 +1818,7 @@ PrefabInstance:
     - target: {fileID: 2072476072217230835, guid: 79f60a8cf93472f44afc6127e20f06d2, type: 3}
       propertyPath: selectables.Array.data[0]
       value: 
-      objectReference: {fileID: 783169602}
+      objectReference: {fileID: 0}
     - target: {fileID: 2072476072217230847, guid: 79f60a8cf93472f44afc6127e20f06d2, type: 3}
       propertyPath: m_RootOrder
       value: 1
