@@ -14,7 +14,7 @@ public class ThrowRock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Time.time > cooldown)
+        if (Input.GetMouseButtonDown(1) && Time.time > cooldown)
         {
             GameObject obj = GameObject.Instantiate(projectile);
             obj.transform.position = Camera.main.transform.position - Camera.main.transform.up * 0.3f + Camera.main.transform.forward * 0.3f + Camera.main.transform.right * 0.4f;
