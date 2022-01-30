@@ -377,6 +377,14 @@ PrefabInstance:
       propertyPath: m_ShowCustomSorter
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 78586845247408684, guid: d1ba1f2a60c7cb74fb7ab929d6613ca4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 78586845247408684, guid: d1ba1f2a60c7cb74fb7ab929d6613ca4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 149406933608321988, guid: d1ba1f2a60c7cb74fb7ab929d6613ca4, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -967,10 +975,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 445255204}
     - target: {fileID: 8125226859041732840, guid: d40af74d5be59ef49b7dcd0b68104ae1, type: 3}
-      propertyPath: LockedDoor
-      value: 
-      objectReference: {fileID: 919132147777966999}
-    - target: {fileID: 8125226859041732840, guid: d40af74d5be59ef49b7dcd0b68104ae1, type: 3}
       propertyPath: LockedGate
       value: 
       objectReference: {fileID: 919132147777966999}
@@ -980,15 +984,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8125226859041732847, guid: d40af74d5be59ef49b7dcd0b68104ae1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.80669
+      value: 1.149
       objectReference: {fileID: 0}
     - target: {fileID: 8125226859041732847, guid: d40af74d5be59ef49b7dcd0b68104ae1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6746943
+      value: 0.633
       objectReference: {fileID: 0}
     - target: {fileID: 8125226859041732847, guid: d40af74d5be59ef49b7dcd0b68104ae1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.3078623
+      value: -14.255
       objectReference: {fileID: 0}
     - target: {fileID: 8125226859041732847, guid: d40af74d5be59ef49b7dcd0b68104ae1, type: 3}
       propertyPath: m_LocalRotation.w

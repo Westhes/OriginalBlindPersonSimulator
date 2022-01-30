@@ -4,6 +4,8 @@ internal class KeySelectionResponse : MonoBehaviour, ISelectionResponse
 {
     private bool mousePressed;
     private bool grabbable;
+    private bool playOnce = false;
+
     [SerializeField] public GameObject LockedGate;
     private Transform Key;
     [SerializeField] public AudioSource audioData;
@@ -37,12 +39,14 @@ internal class KeySelectionResponse : MonoBehaviour, ISelectionResponse
         }
 
 
-        if (mousePressed && grabbable)
+        if (mousePressed && grabbable && !playOnce)
         {
             LockedGate.GetComponent<LockedDoor>().UnlockDoor();
             Key.gameObject.SetActive(false);
-            //audioData = GetComponent<AudioSource>();
-            //audioData.Play(0);
+            audioData = GetComponent<AudioSource>();
+            audioData.Play(0);
+            grabbable = false;
+            playOnce = true;
         }
     }
 }
