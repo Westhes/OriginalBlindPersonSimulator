@@ -16,6 +16,10 @@ public class MainMenu : MonoBehaviour
     {
         
     }
+    public void GoBackToMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
+    }
     public void PlayGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main Scene");

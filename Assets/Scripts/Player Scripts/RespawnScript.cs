@@ -17,6 +17,8 @@ public class RespawnScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Debug.Log("Scene Restarted");
             //Application.LoadLevel(Application.loadedLevel);
 
             //string currentScene = SceneManager.GetActiveScene().name;
